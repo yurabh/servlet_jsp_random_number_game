@@ -1,21 +1,21 @@
-<%@ page import="beans.Game" %>
-<%@ page import="java.awt.desktop.OpenURIEvent" %>
+<%@ page import="domain.Game" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page errorPage="error-page.jsp" %>
+
 <html>
 <head>
-    <%--<title><%=config.getInitParameter("titleGameJsp")%>--%>
-    <%--</title>--%>
+    <title><%=config.getInitParameter("titleGameJsp")%>
+    </title>
     <meta charset="UTF-8">
     <title>Game Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
 <body class="bg-secondary text-white">
+
 <%
     Game game = (Game) session.getAttribute("game");
 %>
@@ -25,7 +25,7 @@
         if (game.getCounter() != 0) {
             out.println("Спроба номер: " + game.getCounter());
         } else {
-            out.println("Ввдіть перше число");
+            out.println("Ввдіть перше число: ");
         }
     %>
 </h5>
@@ -42,23 +42,19 @@
 
 
 <%
-    String Answering = (String) session.getAttribute("answer");
-    Integer number = game.getRate();
+    String answering = (String) session.getAttribute("answer");
 %>
 
 <h5 class="container w-25 my-5">
     <%
-        if (Answering == null) {
+        if (answering == null) {
             out.println("Немає відповіді бо ігра тільки починаеться:");
         } else {
-            out.println("Попереднє введене число: " + Answering);
+            out.println("Попереднє введене число: " + answering);
         }
     %>
 </h5>
 
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

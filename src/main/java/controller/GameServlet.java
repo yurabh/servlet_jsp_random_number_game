@@ -1,8 +1,7 @@
-package servlets;
+package controller;
 
-import beans.Game;
+import domain.Game;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +13,15 @@ import java.io.IOException;
 public class GameServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
         doPost(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+
         HttpSession httpSession = req.getSession();
         Game game = (Game) httpSession.getAttribute("game");
         String answerResult = enterNumber(game, req);

@@ -1,8 +1,10 @@
 package dao;
 
+import exception.DaoException;
+
 import java.util.List;
 
-public interface DaoGenerick<T, V> {
+public interface DaoGeneric<T, V> {
     T create(T object) throws DaoException;
 
     T read(V key) throws DaoException;

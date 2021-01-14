@@ -1,16 +1,14 @@
-<!DOCTYPE web-app PUBLIC
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
 
     <filter>
         <filter-name>DbPlayer</filter-name>
-        <filter-class>filters.DbPlayer</filter-class>
+        <filter-class>filter.DbPlayer</filter-class>
     </filter>
 
     <filter-mapping>
@@ -20,7 +18,7 @@
 
     <filter>
         <filter-name>CreateDbGame</filter-name>
-        <filter-class>filters.CreateDbGame</filter-class>
+        <filter-class>filter.CreateDbGame</filter-class>
     </filter>
 
     <filter-mapping>
@@ -30,7 +28,7 @@
 
     <filter>
         <filter-name>ChangeDataPlayerToDb</filter-name>
-        <filter-class>filters.ChangeDataPlayerToDb</filter-class>
+        <filter-class>filter.ChangeDataPlayerToDb</filter-class>
     </filter>
 
     <filter-mapping>

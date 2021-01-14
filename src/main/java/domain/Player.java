@@ -1,12 +1,13 @@
-package beans;
+package domain;
 
 import java.util.Objects;
 
 public class Player {
+
     private String id;
     private String userName;
-    private Integer balance;
-    private Integer lastBet;
+    private int balance;
+    private int lastBet;
 
     public Player() {
     }
@@ -18,6 +19,13 @@ public class Player {
         this.lastBet = player.lastBet;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;
@@ -27,27 +35,19 @@ public class Player {
         this.userName = userName;
     }
 
-    public Integer getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Integer getLastBet() {
+    public int getLastBet() {
         return lastBet;
     }
 
-    public void setLastBet(Integer lastBet) {
+    public void setLastBet(int lastBet) {
         this.lastBet = lastBet;
     }
 
@@ -56,10 +56,10 @@ public class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(id, player.id) &&
-                Objects.equals(userName, player.userName) &&
-                Objects.equals(balance, player.balance) &&
-                Objects.equals(lastBet, player.lastBet);
+        return balance == player.balance &&
+                lastBet == player.lastBet &&
+                Objects.equals(id, player.id) &&
+                Objects.equals(userName, player.userName);
     }
 
     @Override

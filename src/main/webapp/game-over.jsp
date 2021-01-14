@@ -1,22 +1,19 @@
-<%@ page import="beans.Game" %><%--
-  Created by IntelliJ IDEA.
-  User: Юрій
-  Date: 14.11.2018
-  Time: 12:22
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="domain.Game" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
+
 <head>
-    <%--<title><%=config.getInitParameter("titleGameOverJsp")%>--%>
-    <%--</title>--%>
-    <title>Finish page Game</title>
+    <title><%=config.getInitParameter("titleGameOverJsp")%>
+    </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
 </head>
+
 <body class="bg-danger">
 
 <div class="container w-25 mt-5 text-white">
@@ -29,15 +26,13 @@
 </div>
 
 
-<h5 class="container w-25 text-white">Результат ігри : <%=session.getAttribute("answer")%>
+<h5 class="container w-25 text-white">Result game: <%=session.getAttribute("answer")%>
 </h5>
 
-<h5 class="container w-25 text-white">Ви виграли: <%=session.getAttribute("rate")%>
+<h5 class="container w-25 text-white">Won: <%=session.getAttribute("rate")%>
 </h5>
 
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

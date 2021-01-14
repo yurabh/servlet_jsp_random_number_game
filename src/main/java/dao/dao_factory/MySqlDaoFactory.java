@@ -1,7 +1,13 @@
-package dao;
+package dao.dao_factory;
 
-import beans.Game;
-import beans.Player;
+import dao.DaoCreator;
+import dao.DaoFactory;
+import dao.DaoGeneric;
+import dao.impl.GameDao;
+import dao.impl.PlayerDao;
+import domain.Game;
+import domain.Player;
+import exception.DaoException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -12,8 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-
 public class MySqlDaoFactory implements DaoFactory {
+
     private String DRIVER;
     private String DB;
     private String USER;
@@ -22,8 +28,8 @@ public class MySqlDaoFactory implements DaoFactory {
     private Map<Class, DaoCreator> daos;
 
     public MySqlDaoFactory() throws IOException {
-        loadDBproperties();
-        DriverRegistration();
+        loadDbProperties();
+        driverRegistration();
         loadDaos();
     }
 
@@ -41,7 +47,7 @@ public class MySqlDaoFactory implements DaoFactory {
     }
 
     @Override
-    public DaoGenerick getDao(Connection connection, Class daoClass) throws DaoException {
+    public DaoGeneric getDao(Connection connection, Class daoClass) throws DaoException {
         DaoCreator daoCreator = daos.get(daoClass);
         if (daoCreator == null) {
             throw new DaoException("Dao for class " + daoClass + "not found");
@@ -49,11 +55,10 @@ public class MySqlDaoFactory implements DaoFactory {
         return daoCreator.create(connection);
     }
 
-
-    private void loadDBproperties() throws IOException {
+    private void loadDbProperties() throws IOException {
         Properties properties = new Properties();
         log.info("Getting db properties from file");
-        properties.load(DaoGenerick.class.getResourceAsStream("/db.properties"));
+        properties.load(DaoGeneric.class.getResourceAsStream("/db.properties"));
         DRIVER = properties.getProperty("DRIVER");
         DB = properties.getProperty("DB");
         USER = properties.getProperty("USER");
@@ -61,12 +66,12 @@ public class MySqlDaoFactory implements DaoFactory {
         log.info("Loading db properties done");
     }
 
-    private void DriverRegistration() {
+    private void driverRegistration() {
         try {
             log.info("Starting JDBC driver registration");
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            log.error("Problem with driver registration ");
+            log.error("Problem with driver registration");
             log.error(e.getStackTrace());
         }
     }
@@ -75,14 +80,14 @@ public class MySqlDaoFactory implements DaoFactory {
         daos = new HashMap<>();
         daos.put(Player.class, new DaoCreator() {
             @Override
-            public DaoGenerick create(Connection connection) {
+            public DaoGeneric create(Connection connection) {
                 return new PlayerDao(connection);
             }
         });
 
         daos.put(Game.class, new DaoCreator() {
             @Override
-            public DaoGenerick create(Connection connection) {
+            public DaoGeneric create(Connection connection) {
                 return new GameDao(connection);
             }
         });

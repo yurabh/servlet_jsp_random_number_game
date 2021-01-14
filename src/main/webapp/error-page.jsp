@@ -1,12 +1,16 @@
 <%@page isErrorPage="true" %>
+
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
 <%
-    out.println("Всталася помилка поверніться назад на сторінку");
+    out.println("return back to the previous page because exception happened");
 %>
-<%@include file="/game.jsp" %>
+
+<%@include file="game.jsp" %>
+
 </body>
 </html>

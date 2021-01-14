@@ -1,6 +1,7 @@
-package dao;
+package dao.impl;
 
-import beans.Player;
+import domain.Player;
+import exception.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,27 +18,27 @@ public class PlayerDao extends AbstractDao<Player, String> {
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO `player`(id,userName,balance,lastBet) VALUES" + "(?,?,?,?)";
+        return "INSERT INTO `players`(id,userName,balance,lastBet) VALUES" + "(?,?,?,?)";
     }
 
     @Override
     protected String getSelectQuery() {
-        return "Select * from `player` WHERE `userName`= ?";
+        return "Select * from `players` WHERE `userName`= ?";
     }
 
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM `player` WHERE `id`=?";
+        return "DELETE FROM `players` WHERE `id`= ?";
     }
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE `player` SET userName=?, balance=?,lastBet=? WHERE `id`=?";
+        return "UPDATE `players` SET userName = ?, balance = ?, lastBet = ? WHERE `id` = ?";
     }
 
     @Override
     protected String getSelectAll() {
-        return "SELECT * FROM `player`";
+        return "SELECT * FROM `players`";
     }
 
     @Override
@@ -64,7 +65,7 @@ public class PlayerDao extends AbstractDao<Player, String> {
     @Override
     protected void setSelectStatement(PreparedStatement preparedStatement, Player object) throws DaoException {
         try {
-            preparedStatement.setString(1, String.valueOf(object.getId()));
+            preparedStatement.setString(1, String.valueOf(object.getUserName()));
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -73,7 +74,7 @@ public class PlayerDao extends AbstractDao<Player, String> {
     @Override
     protected void setDeleteStatement(PreparedStatement preparedStatement, Player object) throws DaoException {
         try {
-            preparedStatement.setString(1, String.valueOf(object.getId()));
+            preparedStatement.setString(1, object.getUserName());
         } catch (SQLException e) {
             e.printStackTrace();
         }

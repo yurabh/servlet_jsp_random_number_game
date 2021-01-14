@@ -1,5 +1,7 @@
-package dao;
+package dao.impl;
 
+import exception.DaoException;
+import dao.DaoGeneric;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -8,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class AbstractDao<T, V> implements DaoGenerick<T, V> {
+public abstract class AbstractDao<T, V> implements DaoGeneric<T, V> {
+
     private static final Logger log = Logger.getLogger(AbstractDao.class);
+
     private Connection connection = null;
 
     protected abstract String getInsertQuery();
@@ -51,29 +55,28 @@ public abstract class AbstractDao<T, V> implements DaoGenerick<T, V> {
             log.trace("Insert into our DВ..");
             setInsertStatement(preparedStatement, object);
             int rows = preparedStatement.executeUpdate();
-            log.trace("Finish insert our query");
+            log.trace("Finish inserting our query...");
             if (rows != 1) {
-                throw new DaoException("Created more than one record" + rows);
+                throw new DaoException("Created more than one record: " + rows);
             }
         } catch (SQLException e) {
-            log.error("problem with inserting our qury into our Db");
+            log.error("problem with inserting our query into our Db");
             log.error(e.getMessage());
             throw new DaoException(e.getMessage());
         }
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectLastRecord)) {
-            log.trace("Find  query in our Db");
+            log.trace("Search query in our database");
             setSelectStatement(preparedStatement, object);
             ResultSet resultSet = preparedStatement.executeQuery();
-            log.trace("We are putting our query into the object User");
+            log.trace("We are putting our query into the database");
             List<T> objects = parseResultSet(resultSet);
             if (objects == null || objects.size() != 1) {
-                //throw new DaoException("Returned more than one record");
+                return null;
             }
-            // object = objects.iterator().next();
             log.trace("Our object is right we returned this object");
         } catch (SQLException e) {
-            log.error("We aren't putting this query into the object User");
+            log.error("We couldn't put this query into a database");
             log.error(e.getMessage());
             throw new DaoException(e.getMessage());
         }
@@ -85,19 +88,18 @@ public abstract class AbstractDao<T, V> implements DaoGenerick<T, V> {
         String readQuery = getSelectQuery();
         List<T> users = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(readQuery)) {
-            log.trace("Find in Db");
+            log.trace("Search data in Db");
             setStatementKey(preparedStatement, key);
-            log.trace("Read with Data Base");
+            log.trace("Read data from database");
             ResultSet resultSet = preparedStatement.executeQuery();
             users = parseResultSet(resultSet);
-            log.trace("Created User for returned");
+            log.trace("Found object for returning");
         } catch (SQLException e) {
-            log.error("We aren't find and read query is Db");
+            log.error("We couldn't find and read query in Db");
             log.error(e.getMessage());
         }
 
         if (users == null || users.size() == 0) {
-            //throw new DaoException("Returned more than one record");
             return null;
         }
 
@@ -111,12 +113,12 @@ public abstract class AbstractDao<T, V> implements DaoGenerick<T, V> {
     public T update(T object) throws DaoException {
         String updateQuery = getUpdateQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-            log.trace("Find query in DataBase");
+            log.trace("Update query in DataBase");
             setUpdateStatement(preparedStatement, object);
             preparedStatement.executeUpdate();
-            log.trace("Query is fined and update");
+            log.trace("Query is found and updated");
         } catch (SQLException e) {
-            log.trace("We aren't is update query in this Db");
+            log.trace("We couldn't update query in Db");
             log.error(e.getMessage());
         }
         return null;
@@ -124,14 +126,14 @@ public abstract class AbstractDao<T, V> implements DaoGenerick<T, V> {
 
     @Override
     public void delete(T object) throws DaoException {
-        String findQuery = getDeleteQuery();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(findQuery)) {
-            log.trace("We find query for deleted");
+        String deleteQuery = getDeleteQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+            log.trace("We search query for deleting");
             setDeleteStatement(preparedStatement, object);
             preparedStatement.executeUpdate();
-            log.trace("This query which we find is deleted");
+            log.trace("This query which we found deleted");
         } catch (SQLException e) {
-            log.error("We aren't deleted is query");
+            log.error("We couldn't delete query");
             log.error(e.getMessage());
         }
     }
@@ -142,7 +144,7 @@ public abstract class AbstractDao<T, V> implements DaoGenerick<T, V> {
         List<T> users = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectAll)) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            users = (List<T>) parseResultSet(resultSet);
+            users = parseResultSet(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
